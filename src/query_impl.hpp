@@ -1,3 +1,7 @@
+/*
+ Copyright (c) Oguzhan KATLI
+ Licensed under the MIT license.
+*/
 #pragma once
 #include "include/type_list.hpp"
 #include "include/iterators.hpp"

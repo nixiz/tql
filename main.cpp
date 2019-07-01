@@ -1,6 +1,7 @@
-// ConsoleApplication2.cpp : Defines the entry point for the console application.
-//
-
+/*
+ Copyright (c) Oguzhan KATLI
+ Licensed under the MIT license.
+*/
 #include "include/tql.hpp"
 #include "include/tuple_support.hpp"
 #include <iostream>
@@ -121,9 +122,6 @@ namespace tquery
   static_assert(!tql::query<tql::contains, float, int>::value, "has_type is not working!");
 
   static_assert(tql::query<tql::index_of, test_tlist_pod, int>::value == 2, "has_type is not working!");
-
-  //static_assert(!std::conjunction<std::is_base_of<abstract_base, test_tuple_abstract_classes>>::value, "qweweqweqweq");
-  //static_assert(!std::is_base_of<abstract_base, test_tuple_abstract_classes>::value, "asdasdadsad");
 
 }
 

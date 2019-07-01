@@ -1,3 +1,7 @@
+/*
+ Copyright (c) Oguzhan KATLI
+ Licensed under the MIT license.
+*/
 #pragma once
 #include "src/config.hpp"
 #include "src/erase_impl.hpp"
