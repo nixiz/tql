@@ -75,7 +75,7 @@ namespace poc
 
 } // namespace poc
 
-namespace tquery
+namespace poc_tuple
 {
   struct abstract_base {
     virtual void abstract_foo() = 0;
@@ -106,7 +106,6 @@ namespace tquery
     void abstract_foo() override {}
   };
 
-
   using test_tuple_integers = std::tuple<unsigned, int, short>;
   using test_tuple_abstract_classes = std::tuple<derived_abstract, derived_both>;
   
@@ -123,11 +122,44 @@ namespace tquery
 
   static_assert(tql::query<tql::index_of, test_tlist_pod, int>::value == 2, "has_type is not working!");
 
+
+  constexpr auto get_tuple()
+  {
+    return std::make_tuple(3, 0.8f, 3.14);  
+  }
+
+  template <typename tuple, 
+    typename = std::enable_if_t<tql::query<tql::contains, tuple, int>::value> >
+  constexpr int get_int_from_tuple(tuple&& t)
+  {
+    return std::get<tql::query<tql::index_of, tuple, int>::value>(std::forward<tuple>(t));
+  }
+
+  template <typename tuple, 
+    typename = std::enable_if_t<tql::query<tql::contains, tuple, float>::value> >
+  constexpr float get_float_from_tuple(tuple&& t)
+  {
+    return std::get<tql::query<tql::index_of, tuple, float>::value>(std::forward<tuple>(t));
+  }
+
+  template <typename tuple, typename type>
+  struct tuple_have_type
+  {
+    static constexpr bool result = tql::query<tql::contains, tuple, type>::value;
+  };
 }
 
 
 int main()
 {
+  constexpr int res = poc_tuple::get_int_from_tuple(poc_tuple::get_tuple());
+  static_assert(res == 3, "");
+
+  constexpr float res_f = poc_tuple::get_float_from_tuple(poc_tuple::get_tuple());
+  static_assert(res_f == 0.8f, "");
+
+  static_assert(poc_tuple::tuple_have_type<std::tuple<int, float, std::string>, std::string>::result, "");
+
   return 0;
 }
 
