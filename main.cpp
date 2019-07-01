@@ -54,7 +54,7 @@ namespace tql
     using tuple_list = create_tlist_t<Ts...>;
     using begin_iter = typename begin<tuple_list>::iter;
   public:
-    static const bool value = impl::query_p<impl::use_from_predicate, tuple_list, _From, begin_iter, predicate>::value;
+    static const bool value = impl::query_impl<impl::use_from_predicate, tuple_list, _From, begin_iter, predicate>::value;
   };
 
   template <
@@ -67,7 +67,7 @@ namespace tql
     using tuple_list = create_tlist_t<Ts...>;
     using begin_iter = typename begin<tuple_list>::iter;
   public:
-    static const bool value = impl::query_p<impl::use_to_predicate, tuple_list, _To, begin_iter, predicate>::value;
+    static const bool value = impl::query_impl<impl::use_to_predicate, tuple_list, _To, begin_iter, predicate>::value;
   };
 
   template <
