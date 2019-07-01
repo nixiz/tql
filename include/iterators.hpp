@@ -34,7 +34,7 @@ namespace impl
     static const int tmp_pos = length<Tlist>::value;
     // pos indikatörü her zaman positif veya 0'a eşit olmak zorunda
     // aksi takdirde distance hesaplamalarında sıkıntılar yaşayabiliriz!
-    static const int pos = tmp_pos > 0 ? tmp_pos - 1 : 0;
+    static const int pos = tmp_pos > 0 ? tmp_pos : 0;
   public:
     typedef impl::iterator<null_type, pos> iter;
   };
@@ -63,13 +63,16 @@ namespace impl
   struct next
   {
   private:
-    static const int prev_pos = index_of<Tlist, typename Iterator::value>::value;
+    static constexpr int prev_pos = index_of<Tlist, typename Iterator::value>::value;
+    // static constexpr int next_pos = (prev_pos + 1 == length<Tlist>::value) ? prev_pos : prev_pos + 1; 
+    static constexpr int next_pos = prev_pos + 1; 
   public:
-    typedef impl::iterator<typename type_at<Tlist, prev_pos + 1 >::result> iter;
+    typedef impl::iterator<typename type_at<Tlist, next_pos >::result, next_pos > iter;
   };
 
+  // break the iteration if next iter is end
   template <class Tlist>
-  struct next<Tlist, impl::iterator<null_type> >
+  struct next<Tlist, typename end<Tlist>::iter >
   {
     typedef null_type iter;
   };
