@@ -51,7 +51,7 @@ constexpr float res_f = poc_tuple::get_float_from_tuple(poc_tuple::get_tuple());
 static_assert(res_f == 0.8f, "");
 ```
 
-## SFINAE Support
+## SFINAE Usage
 
 Create tuple or type_list with types:
 
@@ -84,10 +84,9 @@ using test_tuple_classes = std::tuple<derived_abstract, derived_both>;
 
 ```
 
-TQL query can be used with STL type traits library as well
+STL type_traits and tuples can be used with tql::query
 
-```cpp
-// stl type_traits and tuples can be used with tql::query. 
+```cpp 
 static_assert(tql::query<std::is_base_of, test_tuple_classes, tql::place_holder<abstract_base, null_type>>::value, "");
 static_assert(tql::query<std::is_base_of, tql::create_tlist_t<derived_abstract, derived_both>, tql::place_holder<abstract_base>>::value, "");
 
