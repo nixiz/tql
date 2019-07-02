@@ -51,8 +51,6 @@ int main()
 
 ## SFINAE Usage
 
-Create tuple or type_list with types:
-
 ```cpp
 struct abstract_base {
   virtual void abstract_foo() = 0;
@@ -77,16 +75,13 @@ struct derived_both : public base, public abstract_base {
   void abstract_foo() override {}
 };
 
-using test_tuple_integers = std::tuple<unsigned, int, short>;
+// create tuple classes:
 using test_tuple_classes = std::tuple<derived_abstract, derived_both>;
 
-```
-
-STL type_traits and tuples can be used with tql::query
-
-```cpp 
+// checking at compile time that all types are the base type of 'abstract_base' class test_tuple_classes have    
 static_assert(tql::query<std::is_base_of, test_tuple_classes, tql::place_holder<abstract_base, null_type>>::value, "");
-static_assert(tql::query<std::is_base_of, tql::create_tlist_t<derived_abstract, derived_both>, tql::place_holder<abstract_base>>::value, "");
+
+using test_tuple_integers = std::tuple<unsigned, int, short>;
 
 static_assert(tql::query<tql::contains, test_tuple_integers, short>::value, "");
 static_assert(!tql::query<tql::contains, test_tuple_integers, char>::value, "");
@@ -103,29 +98,29 @@ using list_of_types = create_tlist_t<int, double, float>;
 using begin_iter = begin<list_of_types>;
 
 // checking the result of iteration is correct 
-static_assert(std::is_same<begin_iter::iter::value, int>::value, "");
 static_assert(begin_iter::iter::pos == 0, "");
+static_assert(std::is_same<begin_iter::iter::value, int>::value, "");
 
 using next_iter = next< list_of_types, begin_iter::iter >;
-static_assert(std::is_same<next_iter::iter::value, double>::value, "");
 static_assert(next_iter::iter::pos == 1, "");
+static_assert(std::is_same<next_iter::iter::value, double>::value, "");
 
 using next_iter_2 = next< list_of_types, next_iter::iter >;
-static_assert(std::is_same<next_iter_2::iter::value, float>::value, "");
 static_assert(next_iter_2::iter::pos == 2, "");
+static_assert(std::is_same<next_iter_2::iter::value, float>::value, "");
 
 using next_iter_3 = next< list_of_types, next_iter_2::iter >;
-static_assert(std::is_same<next_iter_3::iter::value, null_type>::value, "");
 static_assert(next_iter_3::iter::pos == 3, "");
+static_assert(std::is_same<next_iter_3::iter::value, null_type>::value, "");
 static_assert(std::is_same<next_iter_3::iter, end<list_of_types>::iter>::value, "");
 
+// overflowed iterations will return always null_type as a result
 using next_iter_4 = next< list_of_types, next_iter_3::iter >;
 static_assert(std::is_same<next_iter_4::iter, null_type>::value, "");
 
 using next_iter_5 = next< list_of_types, next_iter_4::iter >;
 static_assert(std::is_same<next_iter_5::iter, null_type>::value, "");
 ```
-
 
 ## License
 
