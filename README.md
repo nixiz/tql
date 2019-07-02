@@ -22,6 +22,10 @@
 
 # Usage
 ```cpp
+#include "include/tql.hpp"
+// for tuple support include tuple_support.hpp
+#include "include/tuple_support.hpp"
+
 constexpr auto get_tuple()
 {
   return std::make_tuple(3, 0.8f, 3.14);  
@@ -34,21 +38,15 @@ constexpr int get_int_from_tuple(tuple&& t) // enables if tuple have int type
   return std::get<tql::query<tql::index_of, tuple, int>::value>(std::forward<tuple>(t));
 }
 
-template <typename tuple, 
-  typename = std::enable_if_t<tql::query<tql::contains, tuple, float>::value> >
-constexpr float get_float_from_tuple(tuple&& t) // enables if tuple have float type
+int main()
 {
-  return std::get<tql::query<tql::index_of, tuple, float>::value>(std::forward<tuple>(t));
+  // all operations will be done at compile time.
+  constexpr int res = get_int_from_tuple(poc_tuple::get_tuple());
+  static_assert(res == 3, "");
+
+  static_assert(tuple_have_type<std::tuple<int, float, std::string>, std::string>::result, "");
+  return 0;
 }
-
-...
-// all operations will be done at compile time.
-
-constexpr int res = poc_tuple::get_int_from_tuple(poc_tuple::get_tuple());
-static_assert(res == 3, "");
-
-constexpr float res_f = poc_tuple::get_float_from_tuple(poc_tuple::get_tuple());
-static_assert(res_f == 0.8f, "");
 ```
 
 ## SFINAE Usage
