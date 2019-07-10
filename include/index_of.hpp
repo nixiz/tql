@@ -3,8 +3,8 @@
  Licensed under the MIT license.
 */
 #pragma once
-#include "src/config.hpp"
-#include "src/index_of_impl.hpp"
+#include "../src/config.hpp"
+#include "../src/index_of_impl.hpp"
 
 namespace tql
 {

@@ -4,11 +4,11 @@
 */
 #pragma once
 
-#include "src/config.hpp"
-#include "include/type_list.hpp"
-#include "include/length.hpp"
-#include "include/index_of.hpp"
-#include "include/type_at.hpp"
+#include "../src/config.hpp"
+#include "type_list.hpp"
+#include "length.hpp"
+#include "index_of.hpp"
+#include "type_at.hpp"
 
 namespace tql
 {

@@ -3,8 +3,8 @@
  Licensed under the MIT license.
 */
 #pragma once
-#include "include/type_list.hpp"
-#include "include/append.hpp"
+#include "../include/type_list.hpp"
+#include "../include/append.hpp"
 
 namespace tql
 {

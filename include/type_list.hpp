@@ -3,7 +3,7 @@
  Licensed under the MIT license.
 */
 #pragma once
-#include "src/config.hpp"
+#include "../src/config.hpp"
 
 namespace tql
 {
